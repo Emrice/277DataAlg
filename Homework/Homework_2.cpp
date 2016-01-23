@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int arr = 5;
 
 struct Name {
   string first;
   string last;
 };
+
 struct Student {
   Name name;
   int studentID;
@@ -15,12 +15,10 @@ struct Student {
   double GPA;
 } mainArr[30];
 
-
 int setLength();
 void sort(int[], int);
 void addInfo(Student[], int);
 double getAverage(int[], int);
-
 
 int main(){
   // set ARR_LENGTH constant here outside of the operations loop
@@ -37,9 +35,21 @@ int main(){
   string fin;
   
   while(cont){
+    cout << "\n\n\n";
+    cout << "1. Show Student Names\n2.Show Student Records\n3. Show StudentIDs\n";
+    cout << "4. Show Student Current Exam Grades\n5. Show Student Past Exam Grades\n";
+    cout << "6. Show Student GPAs\nChoose from options 1-6: ";
+    cin >> answer;
+    
     switch(answer){
-    case 1:
-        
+      case 1: cout << "Student Names: ";
+              for(int x = 0; x < ARR_LENGTH; x++){
+                if(x >= ARR_LENGTH - 1){
+                  cout << mainArr[x].name.first << " " << mainArr[x].name.last << "\n\n";
+                } else {
+                  cout << mainArr[x].name.first << " " << mainArr[x].name.last << ", ";
+                }
+              }
       break;
     case 2:
       
@@ -59,14 +69,19 @@ int main(){
     case 7:
       
       break;
-    default: cout << "Sorry thats not an option.";
+    default: cout << "\n\n\n";
+             cout << "Sorry thats not an option.\n";
+             cout << "1. Show Student Records\n2. Show Student Names\n3. Show StudentIDs\n";
+             cout << "4. Show Student Current Exam Grades\n5. Show Student Past Exam Grades\n";
+             cout << "6. Show Student GPAs\nChoose from options 1-6: ";
       break;
     }
     
-    cout << "Anything else?:";
+    cout << "Anything else? ('yes' or 'no'):";
     cin >> fin;
     
-    if(fin != "yes") {
+    if(fin != "yes"){
+      cont = false;
       break;
     }
   }
@@ -79,15 +94,7 @@ int main(){
     cout << "\nGPA: " << mainArr[p].GPA << "\n\n";
   };
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  return 0;
   
   // sort the mainArr to be
   //sort(mainArr, ARR_LENGTH);
@@ -108,8 +115,6 @@ int main(){
   
   // print out the value of the average grade here
   //  cout << "The average grade is " << avg << "%\n\n";
-  
-  return 0;
 }
 
 int setLength(){
