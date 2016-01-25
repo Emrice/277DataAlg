@@ -15,6 +15,7 @@
 //
 
 #include <iostream>
+#include <iomanip>      // std::setprecision
 #include <string>
 using namespace std;
 // Test data for 3 people: Han Solo 1443039 92.40 85.90 3.6 Naruto Uzumaki 3374569 79.30 50.20 2.90 John S117 0000117 98.90 99.70 4.0
@@ -66,7 +67,7 @@ int main(){
         case 1: for(int p = 0; p < ARR_LENGTH; p++){ //Prints out all the students
                   cout << "\n";
                   cout << mainArr[p].name.last << ", " << mainArr[p].name.first << "\nStudent ID: " << mainArr[p].studentID;
-                  cout << "\nCurrent Exam Grade:" << mainArr[p].cExamGrade << "\nPast Exam Grade: " << mainArr[p].pExamGrade;
+                  cout << "\nCurrent Exam Grade: " << mainArr[p].cExamGrade << "\nPast Exam Grade: " << mainArr[p].pExamGrade;
                   cout << "\nGPA: " << mainArr[p].GPA << "\n\n";
                 };
           break;
@@ -90,7 +91,7 @@ int main(){
                 
                 cout << "\nStudent IDs: ";
                 for(int r = 0; r < ARR_LENGTH; r++){
-                    cout << tempArr[r] << " ";
+                    cout << setprecision(2) << tempArr[r] << " ";
                 }
                 cout << "\n\n";
             break;
@@ -103,7 +104,7 @@ int main(){
                 
                 cout << "\nCurrent Student Exam Grades: ";
                 for(int r = 0; r < ARR_LENGTH; r++){
-                    cout << dTempArr[r] << " ";
+                    cout << setprecision(2) << dTempArr[r] << " ";
                 }
                 cout << "\n\n";
             break;
@@ -114,9 +115,9 @@ int main(){
             
                 dSort(dTempArr, ARR_LENGTH); // sorts the numbers
                 
-                cout << "\nCurrent Student Exam Grades: ";
+                cout << "\nPast Student Exam Grades: ";
                 for(int r = 0; r < ARR_LENGTH; r++){
-                    cout << dTempArr[r] << " ";
+                    cout << setprecision(2) << dTempArr[r] << " ";
                 }
                 cout << "\n\n";
             break;
@@ -127,9 +128,9 @@ int main(){
                 
                 dSort(dTempArr, ARR_LENGTH); // sorts the numbers
                 
-                cout << "\nCurrent Student Exam Grades: ";
+                cout << "\nStudent GPAs: ";
                 for(int r = 0; r < ARR_LENGTH; r++){
-                    cout << dTempArr[r] << " ";
+                    cout << setprecision(2) << dTempArr[r] << " ";
                 }
                 cout << "\n\n";
             break;
