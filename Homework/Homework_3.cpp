@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  HW3
+//  homework #3
 //
 //  Created by Bernin A. Uben on 1/27/16.
 //  Copyright © 2016 Bernin A. Uben. All rights reserved.
@@ -42,153 +42,258 @@
 #include <iostream>
 #include <string>
 using namespace std;
+using std::string;
+
 
 struct Name {
-    string first;
-    string last;
+  string first;
+  string last;
 };
 
 struct Date {
-    int month;
-    int day;
-    int year;
+  int month;
+  int day;
+  int year;
 };
 
 struct Address {
-    int streetNumber;
-    string streetName;
-    string city;
-    string state;
-    string zipCode;
+  int streetNumber;
+  string streetName;
+  string city;
+  string state;
+  string zipCode;
 };
 
 class Party {
 protected:
-    char partyType;
-    Address address;
-    string pNumber;
+  char partyType;
+  Address address;
+  string pNumber;
 };
 
 class Person: public Party {
 protected:
-    Name name;
-    Date dob;
+  Name name;
+  Date dob;
 };
 
 class Passenger: public Person {
 public:
-    void initialize();
-    void getInfo();
-    void getTicket();
-    void cancelTicket();
-    void changeSeat();
-    
+  void initialize();
+  void getInfo();
+  void cancelTicket();
+  void changeSeat();
+  string getName();
+  bool isCanceled();
+  
 private:
-    char status;
-    int ticketNum;
-    int flightNumber;
-    float ticketPrice;
-    Date flyDate;
-    string seatLocation;
-    string freqFlyerNumber;
-};
+  int ticketNum;
+  int flightNumber;
+  float ticketPrice;
+  Date flyDate;
+  string status;
+  string seatLocation;
+  string freqFlyerNumber;
+} people[30];
 
 
 int main() {
+  string answer = "y";
+  int option = 0, counter = 0, pNum = 0;
+  
+  while(answer == "y"){
+    int value;
     
-    Passenger bob;
-    bob.initialize();
-    bob.getInfo();
+    if(counter == 0){
+      cout << "Welcome to the program.\nTo begin, we will need some information.\n\n\n";
+      people[counter].initialize();
+      counter += 1;
+    }
     
+    if (counter > 0 ){
+      cout << "\n::::: Options :::::\n1) Create a New Passenger\n2) Work with a passengers information\n";
+      cin >> value;
+    }
+    
+    if(value == 1 && counter > 0) {
+      
+      people[counter].initialize();
+      counter += 1;
+      
+    } else if(value == 2 && counter > 0 ){
+      
+      cout << "\n::::: All Passengers :::::\n";
+      for(int x = 0; x < counter;x++){
+        if(people[x].isCanceled() == false){
+          cout << x << ") "<< people[x].getName() << "\n";
+        }
+      }
+      cout << "::::::::::::::::::::::::::\n";
+      
+      if( counter > 1 ){
+        cout << "\nPick a passengers information to work with: ";
+        cin >> pNum;
+      }
+      
+      if (people[pNum].isCanceled()){
+        cout << "That Persons ticket is canceled.\n\n";
+      } else {
+        cout << "\n\n::::: Options :::::\n1) Get all the passengers information\n2) Change the passengers ";
+        cout << "seat location\n3) Cancel the passengers ticket\n";
+        cout << "Option: ";
+        cin >> option;
+        
+        switch (option){
+          case 1:
+            people[pNum].getInfo();
+            break;
+          case 2:
+            people[pNum].changeSeat();
+            break;
+          case 3:
+            people[pNum].cancelTicket();
+            break;
+          default: cout << "That isnt an option.\n";
+            break;
+        }
+      }
+    }
+    
+    if (counter <= 1){
+      cout << "Do you want to do anything else? ('y' for Yes): ";
+      cin >> answer;
+    }
+    
+    if (answer != "y"){
+      break;
+    }
+  }
+  
+  cout << "\n\n::::: Receipt :::::\n";
+  for ( int e = 0; e < counter; e++){
+    people[e].getInfo();
+    cout << endl;
+  }
+  cout << "Terminating\n";
+  
+  return 0;
 }
 
+
+
 void Passenger::initialize(){
-    cout << ":::::::::::::::::::: PARTY INFORMATION ::::::::::::::::::::\n\n";
-    cout << "Party Type(‘P’ = person, ‘O’ = organization): ";
-    cin >> partyType;
-    
-    cout << "Phone Number (Format: 'xxx-xxx-xxxx'): ";
-    cin >> pNumber;
-    
-    cout << "::::: Party Address :::::\n";
-    cout << "Street Number: ";
-    cin >> address.streetNumber;
-    
-    cout << "Street Name: ";
-    cin.ignore();
-    getline(cin, address.streetName);
-    
-    cout << "City: ";
-    getline(cin, address.city);
-    
-    cout << "State (Format: XX | Ex: NY, NY, PA): ";
-    cin >> address.state;
-    
-    cout << "Zip Code: ";
-    cin >> address.zipCode;
-
-    cout << "\n\n\n\n:::::::::::::::::::: PASSENGER PERSONAL INFORMATION ::::::::::::::::::::\n\n";
-
-    cout << "First Name: ";
-    cin >> name.first;
-
-    cout << "Last Name: ";
-    cin >> name.last;
-
-    cout << "\n:::::Date of Birth:::::\n";
-    cout << "Month: ";
-    cin >> dob.month;
-    cout << "Day: ";
-    cin >> dob.day;
-    cout << "Year: ";
-    cin >> dob.year;
-
-    cout << "\n\n\n\n:::::::::::::::::::: PASSENGER FLIGHT INFORMATION ::::::::::::::::::::\n\n";
-
-    cout << "Ticket Price: ";
-    cin >> ticketPrice;
-
-    cout << "Ticket Number: ";
-    cin >> ticketNum;
-
-    cout << "Flight Number: ";
-    cin >> flightNumber;
-
-    cout << "Seat Location: ";
-    cin >> seatLocation;
-
-    cout << "Frequent Flyer Number: ";
-    cin >> freqFlyerNumber;
-
-    cout << "\n::::: Flight Date :::::\n";
-    cout << "Flight Month: ";
-    cin >> flyDate.month;
-    cout << "Flight Day: ";
-    cin >> flyDate.day;
-    cout << "Flight Year: ";
-    cin >> flyDate.year;
-    
-    cout << "Status(‘T’ = ticketed, ‘H’ = on hold, ‘C’ = cancel): ";
-    cin >> status;
+  cout << ":::::::::::::::::::: PARTY INFORMATION ::::::::::::::::::::\n\n";
+  cout << "Party Type(‘P’ = person, ‘O’ = organization): ";
+  cin >> partyType;
+  
+  cout << "Phone Number (Format: 'xxx-xxx-xxxx'): ";
+  cin >> pNumber;
+  
+  cout << "::::: Party Address :::::\n";
+  cout << "Street Number: ";
+  cin >> address.streetNumber;
+  
+  cout << "Street Name: ";
+  cin.ignore();
+  getline(cin, address.streetName);
+  
+  cout << "City: ";
+  getline(cin, address.city);
+  
+  cout << "State (Format: XX | Ex: NY, NY, PA): ";
+  cin >> address.state;
+  
+  cout << "Zip Code: ";
+  cin >> address.zipCode;
+  
+  cout << "\n\n\n\n:::::::::::::::::::: PASSENGER PERSONAL INFORMATION ::::::::::::::::::::\n\n";
+  
+  cout << "First Name: ";
+  cin >> name.first;
+  
+  cout << "Last Name: ";
+  cin >> name.last;
+  
+  cout << "\n:::::Date of Birth:::::\n";
+  cout << "Month: ";
+  cin >> dob.month;
+  cout << "Day: ";
+  cin >> dob.day;
+  cout << "Year: ";
+  cin >> dob.year;
+  
+  cout << "\n\n\n\n:::::::::::::::::::: PASSENGER FLIGHT INFORMATION ::::::::::::::::::::\n\n";
+  
+  cout << "Ticket Price: ";
+  cin >> ticketPrice;
+  
+  cout << "Ticket Number: ";
+  cin >> ticketNum;
+  
+  cout << "Flight Number: ";
+  cin >> flightNumber;
+  
+  cout << "Seat Location: ";
+  cin >> seatLocation;
+  
+  cout << "Frequent Flyer Number: ";
+  cin >> freqFlyerNumber;
+  
+  cout << "\n::::: Flight Date :::::\n";
+  cout << "Flight Month: ";
+  cin >> flyDate.month;
+  cout << "Flight Day: ";
+  cin >> flyDate.day;
+  cout << "Flight Year: ";
+  cin >> flyDate.year;
+  status = "T";
 }
 
 void Passenger::getInfo(){
-    cout << "\n\n\n\n\n:::::::::::::::::::: PASSENGER INFORMATION ::::::::::::::::::::\n\n";
-    cout << "Name: " << name.last << ", " << name.first << "          Date of Birth: ";
-    cout << dob.month << "-" << dob.day << "-" << dob.year << endl;
-    cout << "Party Type: " << partyType << "               Phone Number: " << pNumber << endl;
-    cout << "Address: " << address.streetNumber << " " << address.streetName << " ";
-    cout << address.city << ", " << address.state << " " << address.zipCode << "\n\n";
-    
-    cout << "Ticket Number: " << ticketNum << "               Flight Number: " << flightNumber << endl;
-    cout << "Ticket Price: $" << ticketPrice << "               Seat Location: " << seatLocation << "\n";
-    cout << "Frequent Flyer Number: " << freqFlyerNumber <<  "          Status: " << status << "\n";
-    cout << "Day of Departure: " << flyDate.month << "/" << flyDate.day << "/" << flyDate.year << "\n\n";
+  cout << "\n\n:::::::::::::::::::: PASSENGER INFORMATION ::::::::::::::::::::\n\n";
+  cout << "Name: " << name.last << ", " << name.first << "          Date of Birth: ";
+  cout << dob.month << "-" << dob.day << "-" << dob.year << endl;
+  cout << "Party Type: " << partyType << "               Phone Number: " << pNumber << endl;
+  cout << "Address: " << address.streetNumber << " " << address.streetName << " ";
+  cout << address.city << ", " << address.state << " " << address.zipCode << "\n\n";
+  
+  cout << "Ticket Number: " << ticketNum << "               Flight Number: " << flightNumber << endl;
+  cout << "Ticket Price: $" << ticketPrice << "               Seat Location: " << seatLocation << "\n";
+  cout << "Frequent Flyer Number: " << freqFlyerNumber <<  "          Status: " << status << "\n";
+  cout << "Day of Departure: " << flyDate.month << "/" << flyDate.day << "/" << flyDate.year << "\n";
+  cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n";
 }
 
+string Passenger::getName() {
+  return name.last + ", " + name.first;
+}
 
+void Passenger::changeSeat(){
+  cout << "What seat do you want to exchange seat " << seatLocation << " for?: ";
+  cin >> seatLocation;
+}
 
+void Passenger::cancelTicket(){
+  string ans;
+  
+  cout << "Are you sure you want to cancel this ticket?('y' for yes):";
+  cin >> ans;
+  if ( ans == "y"){
+    ticketPrice = 0;
+    ticketNum = 0;
+    flightNumber = 0;
+    seatLocation = "N/A";
+    flyDate.month = 0;
+    flyDate.day = 0;
+    flyDate.year = 0;
+    status = "C"; // gives error if I do this while status is of type 'char'
+  }
+}
 
-
-
-// cout << "" << ;
+bool Passenger::isCanceled(){
+  if(status == "C"){
+    return true;
+  } else {
+    return false;
+  }
+}
