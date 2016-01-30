@@ -42,6 +42,7 @@ class List { // List class
   Node *head;
 public:
   List() { head = NULL; };
+  void Insert(string, int);
   void Insert();
   void Search();
   void Display();
@@ -50,6 +51,7 @@ public:
 int main() {
   int choice;
   List list;
+  list.Insert("LGA", 0);
   
   while (1) {
     cout << "\n---------------------------------\n";
@@ -74,7 +76,7 @@ int main() {
         cout << endl;
         break;
       case 3:
-        cout << "Show all airports\n";
+        cout << "\n\nShowing all airports:\n";
         list.Display();
         cout << endl;
         break;
@@ -90,11 +92,28 @@ int main() {
 }
 
 // Initialize LGA w/ 0
+void List::Insert(string value = "LGA", int dist = 0) {
+  Node* newNode = new Node(); // Create a new node
+  
+  newNode->SetData(value, dist);
+  newNode->SetNext(NULL);
+  
+  Node *tmp = head; // Create a temp pointer
+  
+  if ( tmp != NULL ) {
+    while ( tmp->Next() != NULL ) { // Nodes already present in the list //  Parse to end of list
+      tmp = tmp->Next();
+    }
+    tmp->SetNext(newNode); // Point the last node to the new node
+  }
+  else {
+    head = newNode; // First node in the list
+  }
+}
 
 
 // Append a node to the linked list
 void List::Insert() {
-
   Node* newNode = new Node(); // Create a new node
   
   int dist;
@@ -130,7 +149,7 @@ void List::Search(){
     cout << "EMPTY" << endl;
     return;
   }
-
+  
   cout << "\nEnter the value to be searched: ";
   cin >> value;
   while (found == false){
@@ -138,33 +157,33 @@ void List::Search(){
       found = true;
     } else {
       tmp = tmp->Next();
-    } 
+    }
     if(tmp == NULL){
       cout << "No Airport Found...";
       break;
     }
   }
-
+  
   if(found){
     while (tmp != NULL) {
-      cout << "\nCode:" << tmp->getCode() << ": " << tmp->getMiles() << " Miles ---> ";
+      cout << "\nCode: " << tmp->getCode() << " - " << tmp->getMiles() << " Miles ---> ";
       tmp = tmp->Next();
     }
+    cout << "NULL\n";
   }
 }
 
 void List::Display() { // Print the contents of the list
-
+  
   Node *tmp = head; // Temp pointer
-
+  
   if ( tmp == NULL ) {  // No nodes
     cout << "EMPTY" << endl;
     return;
   }
-
+  
   if ( tmp->Next() == NULL ) {  // One node in the list
-    cout << "Code: " << tmp->getCode() << " - " << tmp->getMiles() << " Miles ---> \n";
-    cout << "NULL" << endl;
+    cout << "Code: " << tmp->getCode() << " - " << tmp->getMiles() << " Miles ---> NULL\n";
   }
   else {
     do {  // Parse and print the list
@@ -177,4 +196,4 @@ void List::Display() { // Print the contents of the list
   }
 }
 
-// Some Test Data: 1 LGA 0 1 JFK 5 1 TBR 21 1 NWK 28
+// Some Test Data: 1 JFK 5 1 TBR 21 1 NWK 28
