@@ -9,56 +9,57 @@
 using namespace std;
 
 class Circle {
+  double PI;
+  double radius;
+  
 public:
-    Circle(double);
-    double getRadius();
-    void setRadius(double);
-    double getArea();
-    double getCircumference();
-private:
-    double radius;
-    double PI = 3.14;
+  Circle(double);
+  void setRadius(double);
+  double getRadius();
+  double getArea();
+  double getCircumference();
 };
 
 int main() {
-    double radius;
-    string answer = "yes";
+  double radius;
+  string answer = "yes";
+  
+  while(answer == "yes"){
+    cout << "\nWhats the radius of the circle?:";
+    cin >> radius;
     
-    while(answer == "yes"){
-        cout << "\nWhats the radius of the circle?:";
-        cin >> radius;
-        
-        Circle one(radius);
-        cout << "\nUser entered " << one.getRadius() << " as Radius\n";
-        cout << "Area: " << one.getArea() << endl;
-        cout << "Circumference: " << one.getCircumference() << endl;
-        
-        cout << "\nAnother one?('yes' or 'no'): ";
-        cin >> answer;
-        
-        if(answer != "yes"){
-            break;
-        }
+    Circle one(radius);
+    cout << "\nUser entered " << one.getRadius() << " as Radius\n";
+    cout << "Area: " << one.getArea() << endl;
+    cout << "Circumference: " << one.getCircumference() << endl;
+    
+    cout << "\nAnother one?('yes' or 'no'): ";
+    cin >> answer;
+    
+    if(answer != "yes"){
+      break;
     }
-    return 0;
+  }
+  return 0;
 }
 
 Circle::Circle(double mainRadius){
-    radius = mainRadius;
+  radius = mainRadius;
+  PI = 3.14;
 }
 
 void Circle::setRadius(double mainRadius){
-    radius = mainRadius;
+  radius = mainRadius;
 }
 
 double Circle::getRadius(){
-    return radius;
+  return radius;
 }
 
 double Circle::getArea(){
-    return PI * radius * radius;
+  return PI * radius * radius;
 }
 
 double Circle::getCircumference(){
-    return PI * (2 * radius);
+  return PI * (2 * radius);
 }
