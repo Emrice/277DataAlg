@@ -1,6 +1,6 @@
 //
-//  main.cpp
-//  hw6
+//  Homework_5.cpp
+//  homework #5
 //
 //  Created by Bernin A. Uben on 2/11/16.
 //  Copyright © 2016 Bernin A. Uben. All rights reserved.
@@ -81,4 +81,51 @@ double LinkedList::Operations(double value, int opVal, double total){
       break;
   }
   return 0.0;
+}
+
+void LinkedList::Solve(){
+  double total = 0.0, nElem = 0.0;
+  int opVal = 0, counter = 0;
+  Node* cNode = head;
+  
+  while( counter < 11 ){
+    int opNote = 0, elemNote = 0;
+    
+    if (cNode->getElem() == '+') { opVal = 1; opVal = 1; } // Sets the opVal to help tell the Oprations function what to do
+    else if (cNode->getElem() == '-') { opVal = 2; opVal = 1; }
+    else if (cNode->getElem() == '*' || cNode->getElem() == 'x') { opVal = 3; opVal = 1; }
+    else if (cNode->getElem() == '/') { opVal = 4; opVal = 1; }
+    
+    if(cNode->getElem() != '+' || cNode->getElem() != '-' || cNode->getElem() != '*' || cNode->getElem() != 'x' || cNode->getElem() != '/'){
+      nElem = cNode->getElem(); // if the current char is not isnt an operator symbol
+      
+    }
+    
+    if(opNote == 1 && elemNote == 1 && opVal != 0){
+      total = Operations(nElem, opVal, total);
+      counter++;
+    }
+    
+    cNode = cNode->getNext();
+  }
+  cout << total;
+}
+
+void LinkedList::setElement(char exp){
+  
+  if( exp != '\0' && exp != 'a' && exp != 'b' && exp != 'c'  && exp != 'd' && exp != 'e' && exp != 'f'  && exp != 'g' && exp != 'h' && exp != 'i' && exp != 'j' && exp != 'k' && exp != 'l' && exp != 'm' && exp != 'n' && exp != 'o' && exp != 'p' && exp != 'q' && exp != 'r' && exp != 's' && exp != 't' && exp != 'u' && exp != 'v' && exp != 'w' && exp != 'x' && exp != 'y' && exp != 'z' ){
+    if ( empty() ) {
+        Node *newNode = new Node;
+        head = newNode;
+        newNode->setElem(exp);
+        newNode->setNext(NULL);
+        cout << "Added " << newNode->getElem() << " as Head\n";
+    } else {
+        Node *newNode = new Node;
+        newNode->setElem(exp);
+        newNode->setNext(NULL);
+        cout << "Added " << newNode->getElem() << "\n";
+    }
+  }
+  
 }
