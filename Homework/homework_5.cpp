@@ -1,15 +1,16 @@
 //
-//  main.cpp
-//  hw6
+//  Homework_5.cpp
+//  homework #5
 //
 //  Created by Bernin A. Uben on 2/11/16.
 //  Copyright © 2016 Bernin A. Uben. All rights reserved.
 //  Write a program which will take a calculation using a set of numbers, the operands +, -, *, / and standard parentheses and will
 //  determine the result.  Use the algorithm demonstrated in class to implement the solution, but do it using a singly linked list to emulate the stack ADT.
-//  TestData, Should return 6 as answer: 1+1+1+1+1+1
+//  TestData, Should return 6 as answer: 1+2+3+4+5+6
 
 #include <iostream>
 #include <cstdlib>
+#include <stdlib.h>     /* atof */
 #include <string>
 using namespace std;
 
@@ -107,37 +108,21 @@ void LinkedList::Solve(){
         opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0;
         counter += 1;
         
-      } else if (opChecker == true && elemChecker == true && thirdCounter > 1) {
-        string dNum;
-//        if (cNode->getElem() == '0') { elemVal = 0.0; }
-//        else if (cNode->getElem() == '1') { third = 1.0; }
-//        else if (cNode->getElem() == '2') { third = 2.0; }
-//        else if (cNode->getElem() == '3') { third = 3.0; }
-//        else if (cNode->getElem() == '4') { third = 4.0; }
-//        else if (cNode->getElem() == '5') { third = 5.0; }
-//        else if (cNode->getElem() == '6') { third = 6.0; }
-//        else if (cNode->getElem() == '7') { third = 7.0; }
-//        else if (cNode->getElem() == '8') { third = 8.0; }
-//        else if (cNode->getElem() == '9') { third = 9.0; }
+      } else if (opChecker == true && elemChecker == true && thirdCounter > 1 && thirdChecker != true) {
+        char dNum = cNode->getElem();
+        third = atof(&dNum);
         cout << "Current value to modify the total: " << third << "\n";
         total = Operations(elemVal, third, opVal); // sets the elem + the third num to be added and returned as the total only if its the first time round else its going to do operations on the total variable
-        thirdChecker = true; opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0;
+        thirdChecker = true; opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0; counter++;
         
-      } else if (cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/'){
-        if (cNode->getElem() == '0') { elemVal = 0.0; }
-        else if (cNode->getElem() == '1') { elemVal = 1.0; elemChecker = true; }
-        else if (cNode->getElem() == '2') { elemVal = 2.0; elemChecker = true; }
-        else if (cNode->getElem() == '3') { elemVal = 3.0; elemChecker = true; }
-        else if (cNode->getElem() == '4') { elemVal = 4.0; elemChecker = true; }
-        else if (cNode->getElem() == '5') { elemVal = 5.0; elemChecker = true; }
-        else if (cNode->getElem() == '6') { elemVal = 6.0; elemChecker = true; }
-        else if (cNode->getElem() == '7') { elemVal = 7.0; elemChecker = true; }
-        else if (cNode->getElem() == '8') { elemVal = 8.0; elemChecker = true; }
-        else if (cNode->getElem() == '9') { elemVal = 9.0; elemChecker = true; }
+      } else if (cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/' && elemChecker == true){
+        char dNum = cNode->getElem();
+        elemVal = atof(&dNum);
+        elemChecker = true;
         cout << "Current value to modify the total: " << elemVal << "\n";
         if (thirdCounter < 2){ thirdCounter++; }
         
-      } else {
+      } else if (cNode->getElem() == '+' && cNode->getElem() == '-' && cNode->getElem() == '*' && cNode->getElem() == 'x' && cNode->getElem() == '/' && opChecker != true) {
         cout << "Operation:";
         if      (cNode->getElem() == '+') { opVal = 1; opChecker = true; cout << " + \n"; } // Sets the opVal to help tell the Oprations function what to do
         else if (cNode->getElem() == '-') { opVal = 2; opChecker = true; cout << " - \n"; }
@@ -145,13 +130,16 @@ void LinkedList::Solve(){
         else if (cNode->getElem() == 'x') { opVal = 3; opChecker = true; cout << " * \n"; }
         else if (cNode->getElem() == '/') { opVal = 4; opChecker = true; cout << " / \n"; }
         if (thirdCounter < 2){ thirdCounter++; }
-      }
-      if (cNode->getNext() == NULL) {
-        cout << "Nothing left\n";
-        break;
+
       } else {
-        cNode = cNode->getNext();
+        if (cNode->getNext() == NULL) {
+          cout << "Nothing left\n";
+          break;
+        } else {
+          cNode = cNode->getNext();
+        }
       }
+      
     } else {
       cout << "No expression registered\n\n";
       break;
@@ -162,16 +150,43 @@ void LinkedList::Solve(){
 
 double LinkedList::Operations(double total, double value, int opVal){
   switch(opVal){
-    case 1: return total = total + value;
+    case 1: total = total + value;
+      return total;
       break;
-    case 2: return total = total - value;
+    case 2: total = total - value;
+      return total;
       break;
-    case 3: return total = total * value;
+    case 3: total = total * value;
+      return total;
       break;
-    case 4: return total = total / value;
+    case 4: total = total / value;
+      return total;
       break;
     default: cout << "Something went wrong here.\n\n";
       return total;
       break;
   }
 }
+
+
+//        if (cNode->getElem() == '0') { elemVal = 0.0; }
+//        else if (cNode->getElem() == '1') { third = 1.0; }
+//        else if (cNode->getElem() == '2') { third = 2.0; }
+//        else if (cNode->getElem() == '3') { third = 3.0; }
+//        else if (cNode->getElem() == '4') { third = 4.0; }
+//        else if (cNode->getElem() == '5') { third = 5.0; }
+//        else if (cNode->getElem() == '6') { third = 6.0; }
+//        else if (cNode->getElem() == '7') { third = 7.0; }
+//        else if (cNode->getElem() == '8') { third = 8.0; }
+//        else if (cNode->getElem() == '9') { third = 9.0; }
+
+//        if (cNode->getElem() == '0') { elemVal = 0.0; }
+//        else if (cNode->getElem() == '1') { elemVal = 1.0; elemChecker = true; }
+//        else if (cNode->getElem() == '2') { elemVal = 2.0; elemChecker = true; }
+//        else if (cNode->getElem() == '3') { elemVal = 3.0; elemChecker = true; }
+//        else if (cNode->getElem() == '4') { elemVal = 4.0; elemChecker = true; }
+//        else if (cNode->getElem() == '5') { elemVal = 5.0; elemChecker = true; }
+//        else if (cNode->getElem() == '6') { elemVal = 6.0; elemChecker = true; }
+//        else if (cNode->getElem() == '7') { elemVal = 7.0; elemChecker = true; }
+//        else if (cNode->getElem() == '8') { elemVal = 8.0; elemChecker = true; }
+//        else if (cNode->getElem() == '9') { elemVal = 9.0; elemChecker = true; }
