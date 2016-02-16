@@ -14,10 +14,12 @@
 #include <string>
 using namespace std;
 
+const int LIMIT = 11;
+
 class Node {
   char elem;
   Node* next;
-
+  
 public:
   Node(){};
   Node* getNext(){ return next; };
@@ -33,18 +35,18 @@ class LinkedList {
 public:
   LinkedList(){ head = NULL; };
   bool empty();
-  void Solve();
   void setElement(char);
-  double Operations(double, double, int);
+  int Solve();
+  int Operations(int, int, int);
 };
 
 //const char L[26] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 //const char N[10] = { '0', '1',  '2', '3',  '3', '5',  '6', '7',  '8', '9' };
 
 int main(){
-  char exp[12];
+  char exp[LIMIT+1];
   
-  for(int i = 0; i < 11; i++){
+  for(int i = 0; i < LIMIT; i++){
     exp[i] = 'q';
   }
   
@@ -54,11 +56,11 @@ int main(){
   
   LinkedList list;
   
-  for(int i = 11; i >= 0; i--){ // adding sequence in reverse order
+  for(int i = LIMIT; i >= 0; i--){ // adding sequence in reverse order
     list.setElement(exp[i]);
   }
   
-  list.Solve();
+  cout << list.Solve();
   
   return EXIT_SUCCESS;
 }
@@ -88,67 +90,37 @@ bool LinkedList::empty(){        // Is Stack empty?
   return retVal = (head == NULL) ? true : false;
 }
 
-void LinkedList::Solve(){
-  double total = 0.0, elemVal = 0.0, third = 0.0;
-  int opVal = 0, counter = 0, thirdCounter = 0;
+int LinkedList::Solve(){
+  int total = 0, elemVal = 0, opVal = 0;
+  bool initChecker = false, OpChecker = false, elemChecker = false;
   
   Node* cNode = head;
   
-  while( counter < 11 ){
-    if (cNode != NULL) {
-      bool opChecker = false, elemChecker = false, thirdChecker = false;
-      
-      if (opChecker == true && elemChecker == true && thirdChecker == true ){
-        if (opVal == 1) { cout << total << " + " << elemVal << "? "; }
-        else if (opVal == 2) { cout << total << " - " << elemVal << "? "; }
-        else if (opVal == 3) { cout << total << " * " << elemVal << "? "; }
-        else if (opVal == 4) { cout << total << " / " << elemVal << "? "; }
-        cout << Operations(total, elemVal, opVal) << " is now the total.\n\n";
-        total = Operations(total, elemVal, opVal);
-        opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0;
-        counter += 1;
-        
-      } else if (opChecker == true && elemChecker == true && thirdCounter > 1 && thirdChecker != true) {
-        char dNum = cNode->getElem();
-        third = atof(&dNum);
-        cout << "Current value to modify the total: " << third << "\n";
-        total = Operations(elemVal, third, opVal); // sets the elem + the third num to be added and returned as the total only if its the first time round else its going to do operations on the total variable
-        thirdChecker = true; opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0; counter++;
-        
-      } else if (cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/' && elemChecker == true){
-        char dNum = cNode->getElem();
-        elemVal = atof(&dNum);
-        elemChecker = true;
-        cout << "Current value to modify the total: " << elemVal << "\n";
-        if (thirdCounter < 2){ thirdCounter++; }
-        
-      } else if (cNode->getElem() == '+' && cNode->getElem() == '-' && cNode->getElem() == '*' && cNode->getElem() == 'x' && cNode->getElem() == '/' && opChecker != true) {
-        cout << "Operation:";
-        if      (cNode->getElem() == '+') { opVal = 1; opChecker = true; cout << " + \n"; } // Sets the opVal to help tell the Oprations function what to do
-        else if (cNode->getElem() == '-') { opVal = 2; opChecker = true; cout << " - \n"; }
-        else if (cNode->getElem() == '*') { opVal = 3; opChecker = true; cout << " * \n"; }
-        else if (cNode->getElem() == 'x') { opVal = 3; opChecker = true; cout << " * \n"; }
-        else if (cNode->getElem() == '/') { opVal = 4; opChecker = true; cout << " / \n"; }
-        if (thirdCounter < 2){ thirdCounter++; }
-
-      } else {
-        if (cNode->getNext() == NULL) {
-          cout << "Nothing left\n";
-          break;
-        } else {
-          cNode = cNode->getNext();
-        }
-      }
-      
-    } else {
-      cout << "No expression registered\n\n";
-      break;
-    }
+  for(int count = 0; count < LIMIT; count++){
+    // If initChecker == false && total == 0
+    // Set the total as the first number in the expression
+    // Set initChecker to true
+    // Increment the current head of the stack and pop it off
+    //
+    // Else if - the current element in the stack is a number && elemChecker == false
+    // Add the element from char to int into the elemVal variable
+    // Set elemChecker to true
+    // Increment the current head of the stack and pop it off
+    //
+    // Else if the current element in the stack is an operation value && opChecker == flase
+    // Set the opVal value to the corresponding value depending on the type of element
+    // Set opChecker to true
+    // Increment the head of stack
+    //
+    // Else if elemChecker && opChecker variables are 'true' then
+    // Call the Operations function and set the return as the new 'total' value
+    // Set the opChecker and elemChecker values to false
+    // increment the head to the next one
   }
-  cout << total << endl;
+  return total;
 }
 
-double LinkedList::Operations(double total, double value, int opVal){
+int LinkedList::Operations(int total, int value, int opVal){
   switch(opVal){
     case 1: total = total + value;
       return total;
@@ -190,3 +162,61 @@ double LinkedList::Operations(double total, double value, int opVal){
 //        else if (cNode->getElem() == '7') { elemVal = 7.0; elemChecker = true; }
 //        else if (cNode->getElem() == '8') { elemVal = 8.0; elemChecker = true; }
 //        else if (cNode->getElem() == '9') { elemVal = 9.0; elemChecker = true; }
+
+// OLD SOLVE FUNCTION: TOTAL WAS OUT OF SCOPE IN THE WHILE LOOP
+//
+//  while( counter < 11 ){
+//    if (cNode != NULL) {
+//      bool opChecker = false, elemChecker = false, thirdChecker = false;
+//      
+//      if (opChecker == true && elemChecker == true && thirdChecker == true ){
+//        if (opVal == 1) { cout << total << " + " << elemVal << "? "; }
+//          else if (opVal == 2) { cout << total << " - " << elemVal << "? "; }
+//          else if (opVal == 3) { cout << total << " * " << elemVal << "? "; }
+//          else if (opVal == 4) { cout << total << " / " << elemVal << "? "; }
+//          cout << Operations(total, elemVal, opVal) << " is now the total.\n\n";
+//          total = Operations(total, elemVal, opVal);
+//          opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0;
+//          counter += 1;
+//          
+//          } else if (opChecker == true && elemChecker == true && thirdCounter > 1 && thirdChecker == false) {
+//            char dNum = cNode->getElem();
+//            third = (int)dNum;
+//            cout << "Current value to modify the total: " << third << "\n";
+//            total = Operations(elemVal, third, opVal); // sets the elem + the third num to be added and returned as the total only if its the first time round else its going to do operations on the total variable
+//            thirdChecker = true; opChecker = false; elemChecker = false; opVal = 0; elemVal = 0.0; counter++;
+//            
+//          } else if (cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/' && elemChecker == true){
+//            char dNum = cNode->getElem();
+//            elemVal = (int)dNum;
+//            elemChecker = true;
+//            cout << "Current value to modify the total: " << elemVal << "\n";
+//            if (thirdCounter < 2){ thirdCounter += 1; }
+//            
+//          } else if (cNode->getElem() == '+' && cNode->getElem() == '-' && cNode->getElem() == '*' && cNode->getElem() == 'x' && cNode->getElem() == '/' && opChecker != true) {
+//            cout << "Operation:";
+//            if      (cNode->getElem() == '+') { opVal = 1; cout << " + \n"; } // Sets the opVal to help tell the Oprations function what to do
+//            else if (cNode->getElem() == '-') { opVal = 2; cout << " - \n"; }
+//            else if (cNode->getElem() == '*') { opVal = 3; cout << " * \n"; }
+//            else if (cNode->getElem() == 'x') { opVal = 3; cout << " * \n"; }
+//            else if (cNode->getElem() == '/') { opVal = 4; cout << " / \n"; }
+//            opChecker = true;
+//            if (thirdCounter < 2){ thirdCounter += 1; }
+//            
+//          } else {
+//            if (cNode->getNext() == NULL) {
+//              cout << "Nothing left\n";
+//              break;
+//            } else {
+//              cNode = cNode->getNext();
+//            }
+//          }
+//          
+//          } else {
+//            cout << "No expression registered\n\n";
+//            break;
+//          }
+//          }
+//          cout << total << endl;
+//          return total;
+//
