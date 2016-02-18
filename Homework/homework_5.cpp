@@ -56,7 +56,7 @@ int main(){
   
   LinkedList list;
   
-  for(int i = LIMIT; i >= 0; i--){ // adding sequence in reverse order
+  for(int i = 0; i < LIMIT; i++){ // adding sequence in reverse order (int i = LIMIT; i >= 0; i--)
     list.setElement(exp[i]);
   }
   
@@ -92,50 +92,62 @@ bool LinkedList::empty(){        // Is Stack empty?
 
 int LinkedList::Solve(){
   int total = 0, elemVal = 0, opVal = 0;
-  bool initChecker = false, OpChecker = false, elemChecker = false;
+  bool initChecker = false, opChecker = false, elemChecker = false;
   
   Node* cNode = head;
   
   for(int count = 0; count < LIMIT; count++){
-    // If initChecker == false && total == 0
-    // Set the total as the first number in the expression
-    // Set initChecker to true
-    // Increment the current head of the stack and pop it off
-    //
-    // Else if - the current element in the stack is a number && elemChecker == false
-    // Add the element from char to int into the elemVal variable
-    // Set elemChecker to true
-    // Increment the current head of the stack and pop it off
-    //
-    // Else if the current element in the stack is an operation value && opChecker == flase
-    // Set the opVal value to the corresponding value depending on the type of element
-    // Set opChecker to true
-    // Increment the head of stack
-    //
-    // Else if elemChecker && opChecker variables are 'true' then
-    // Call the Operations function and set the return as the new 'total' value
-    // Set the opChecker and elemChecker values to false
-    // increment the head to the next one
+    
+    cNode = cNode->getNext();                 // Set the next element as the new head
+    
+    if (cNode == NULL) {
+      break;
+    }
+    
+    if( initChecker == false && total == 0 ){   // If initChecker == false && total == 0
+      total = cNode->getElem() - 48;            // Set the total as the first number in the expression
+      initChecker = true;                       // Set initChecker to true to tell program that the first number has been loaded
+                                                // Increment the current head of the stack and pop it off
+    } else if (cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/' && elemChecker == false){ // Else if - the current element in the stack is a number && elemChecker == false
+      elemVal = cNode->getElem() - 48;          // Add the element from char to int into the elemVal variable
+      elemChecker = true;                       // Set elemChecker to true
+                                                // Increment the current head of the stack and pop it off
+    } else if(cNode->getElem() == '+' && cNode->getElem() == '-' && cNode->getElem() == '*' && cNode->getElem() == 'x' && cNode->getElem() == '/' && opChecker == false){ // Else if the current element in the stack is an operation value && opChecker == flase
+      cout << "Operation:";
+      if      (cNode->getElem() == '+') { opVal = 1; cout << " + \n"; } // Sets the opVal to help tell the Oprations function what to do
+      else if (cNode->getElem() == '-') { opVal = 2; cout << " - \n"; } // Set the opVal value to the corresponding value depending on the type of element
+      else if (cNode->getElem() == '*') { opVal = 3; cout << " * \n"; } // Sets the opVal to help tell the Oprations function what to do
+      else if (cNode->getElem() == 'x') { opVal = 3; cout << " * \n"; } // Set the opVal value to the corresponding value depending on the type of element
+      else if (cNode->getElem() == '/') { opVal = 4; cout << " / \n"; } // Sets the opVal to help tell the Oprations function what to do
+      opChecker = true;                         // Set opChecker to true
+                                                // Increment the head of stack
+    } else if(elemChecker && opChecker) {       // Else if elemChecker && opChecker variables are 'true' then
+      total = Operations(total, elemVal, opVal);// Call the Operations function and set the return as the new 'total' value
+      opChecker = false; elemChecker = false;   // Set the opChecker and elemChecker values to false
+      opVal = 0; elemVal = 0;                   // Set opVal & elemVal to nothing
+                                                // increment the head to the next one
+    }
   }
   return total;
 }
 
 int LinkedList::Operations(int total, int value, int opVal){
+  int final;
   switch(opVal){
-    case 1: total = total + value;
-      return total;
+    case 1: final = total + value;
+      return final;
       break;
-    case 2: total = total - value;
-      return total;
+    case 2: final = total - value;
+      return final;
       break;
-    case 3: total = total * value;
-      return total;
+    case 3: final = total * value;
+      return final;
       break;
-    case 4: total = total / value;
-      return total;
+    case 4: final = total / value;
+      return final;
       break;
     default: cout << "Something went wrong here.\n\n";
-      return total;
+      return final;
       break;
   }
 }
