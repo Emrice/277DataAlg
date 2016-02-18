@@ -53,7 +53,9 @@ int main(){
   Stack stack;
   
   for(int i = LIMIT; i >= 0; i--){ // adding sequence in reverse order (int i = LIMIT; i >= 0; i--)
-    stack.setElement(exp[i]);
+    if(exp[i] != ' '){
+      stack.setElement(exp[i]);
+    }
   }
   
   cout << "\nExpression total: " << stack.Solve() << endl;
@@ -88,6 +90,7 @@ bool Stack::empty(){        // Is Stack empty?
 }
 
 double Stack::Solve(){
+  int counter;
   double total = 0, elemVal = 0;
   int opVal = 0;
   bool initChecker = false, opChecker = false, elemChecker = false;
@@ -96,7 +99,7 @@ double Stack::Solve(){
   
   for(int count = 0; count < LIMIT; count++){
     if( initChecker == false && total == 0 ){           // If initChecker == false && total == 0
-      if (cNode->getElem() == '0') { total = 0.0; }
+      if (cNode->getElem() == '0') { total = 0; }
       else if (cNode->getElem() == '1') { total = 1; }
       else if (cNode->getElem() == '2') { total = 2; }
       else if (cNode->getElem() == '3') { total = 3; }
@@ -106,13 +109,43 @@ double Stack::Solve(){
       else if (cNode->getElem() == '7') { total = 7; }
       else if (cNode->getElem() == '8') { total = 8; }
       else if (cNode->getElem() == '9') { total = 9; } //      cout << "\nThe current element: " << cNode->getElem() << endl << "Total is now: " << total << "\n\n";
+      
+      Node* tNode = cNode->getNext();
+      while (tNode->getElem() != '+' || tNode->getElem() != '-' || tNode->getElem() != '*' || tNode->getElem() != 'x' || tNode->getElem() != '/') {
+        if(tNode->getElem() == '+' || tNode->getElem() == '-' || tNode->getElem() == '*' || tNode->getElem() == 'x' || tNode->getElem() == '/'){
+          break;
+        } else {
+          counter += 1;
+        }
+        
+        tNode = tNode->getNext();
+      }
+      
+      tNode = cNode->getNext();
+      for(int i = 0; i < counter-1; i++){
+        if(tNode->getElem() != '+' || tNode->getElem() != '-' || tNode->getElem() != '*' || tNode->getElem() != 'x' || tNode->getElem() != '/') {
+          if (tNode->getElem() == '0') { total = total * 10; }
+          else if (tNode->getElem() == '1') { total = (total * 10) + 1; }
+          else if (tNode->getElem() == '2') { total = (total * 10) + 2; }
+          else if (tNode->getElem() == '3') { total = (total * 10) + 3; }
+          else if (tNode->getElem() == '4') { total = (total * 10) + 4; }
+          else if (tNode->getElem() == '5') { total = (total * 10) + 5; }
+          else if (tNode->getElem() == '6') { total = (total * 10) + 6; }
+          else if (tNode->getElem() == '7') { total = (total * 10) + 7; }
+          else if (tNode->getElem() == '8') { total = (total * 10) + 8; }
+          else if (tNode->getElem() == '9') { total = (total * 10) + 9; }
+          cNode = cNode->getNext();
+          tNode = tNode->getNext();
+        }
+      }
       cout << "\nStarting with " << total << ",\n";
       initChecker = true;                               // Set initChecker to true to tell program that the first number has been loaded
+      
       
       // Else if - the current element in the stack is a number && elemChecker == false
     } else if ( (cNode->getElem() == '0' || cNode->getElem() == '1' || cNode->getElem() == '2' || cNode->getElem() == '3' || cNode->getElem() == '4' ||
                  cNode->getElem() == '5' || cNode->getElem() == '6' || cNode->getElem() == '7' || cNode->getElem() == '8' || cNode->getElem() == '9' ) && elemChecker == false ){
-      if (cNode->getElem() == '0') { elemVal = 0.0; }
+      if (cNode->getElem() == '0') { elemVal = 0; }
       else if (cNode->getElem() == '1') { elemVal = 1; }
       else if (cNode->getElem() == '2') { elemVal = 2; }
       else if (cNode->getElem() == '3') { elemVal = 3; }
@@ -121,9 +154,10 @@ double Stack::Solve(){
       else if (cNode->getElem() == '6') { elemVal = 6; }
       else if (cNode->getElem() == '7') { elemVal = 7; }
       else if (cNode->getElem() == '8') { elemVal = 8; }
-      else if (cNode->getElem() == '9') { elemVal = 9; }//      cout << "The current element: " << cNode->getElem() << endl << "elemVal is now: " << elemVal << "\n\n";
+      else if (cNode->getElem() == '9') { elemVal = 9; } //      cout << "\nThe current element: " << cNode->getElem() << endl << "Total is now: " << total << "\n\n";
       cout << elemVal;
       elemChecker = true;                               // Set elemChecker to true
+      
       
       // Else if the current element in the stack is an operation value && opChecker == false
     } else if((cNode->getElem() == '+' || cNode->getElem() == '-' || cNode->getElem() == '*' || cNode->getElem() == 'x' || cNode->getElem() == '/') && opChecker == false){
@@ -133,9 +167,10 @@ double Stack::Solve(){
       else if (cNode->getElem() == '*') { opVal = 3; cout << " * "; } // Sets the opVal to help tell the Oprations function what to do
       else if (cNode->getElem() == 'x') { opVal = 3; cout << " * "; } // Set the opVal value to the corresponding value depending on the type of element
       else if (cNode->getElem() == '/') { opVal = 4; cout << " / "; } // Sets the opVal to help tell the Oprations function what to do
-      opChecker = true;                         // Set opChecker to true //      cout << "The current element: " << cNode->getElem() << endl << "opVal is now: " << opVal << "\n\n";
+      opChecker = true;                         // Set opChecker to true
+      //      cout << "The current element: " << cNode->getElem() << endl << "opVal is now: " << opVal << "\n\n";
     }
-
+    
     if (opChecker == true && elemChecker == true) {       // if(elemChecker == true && opChecker == true) // Else if elemChecker && opChecker variables are 'true' then
       cout << " = " << Operations(total, elemVal, opVal) << "\n";
       total = Operations(total, elemVal, opVal);// Call the Operations function and set the return as the new 'total' value
