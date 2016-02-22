@@ -36,7 +36,7 @@ public:
   bool empty(){ return (head == NULL) ? true : false; }   // Return true if Stack is empty else return false
   void push(char);                                        // Adds a valid value as the current nodes element
   void pop();                                             // Deletes the current node and sets the next as the head
-  double Solve();                                         // Bulk logic for picking correct numbers
+  double Solve();                                         // Bulk logic for picking correct numbers from the stack
   double Operations(double, double, int);                 // Takes the correct numbers and adds/multiplies/subtracts/divides them
 };
 
@@ -96,36 +96,36 @@ double Stack::Solve(){
   bool initChecker = false, opChecker = false, elemChecker = false;
   
   for(int count = 0; count < LIMIT; count++){
-    if( initChecker == false && total == 0 ){          // If initChecker == false && total == 0
-      if (cNode->getElem() == '0') { total = 0; }      // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '1') { total = 1; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '2') { total = 2; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '3') { total = 3; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '4') { total = 4; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '5') { total = 5; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '6') { total = 6; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '7') { total = 7; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '8') { total = 8; } // Sets the total as the corresponding char value number
-      else if (cNode->getElem() == '9') { total = 9; } // Sets the total as the corresponding char value number
-      cNode = cNode->getNext(); pop();                 // Get the next node and seat it as the current node
+    if( initChecker == false && total == 0 ){               // If initChecker == false && total == 0
+      if (cNode->getElem() == '0') { total = 0; }           // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '1') { total = 1; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '2') { total = 2; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '3') { total = 3; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '4') { total = 4; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '5') { total = 5; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '6') { total = 6; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '7') { total = 7; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '8') { total = 8; }      // Sets the total as the corresponding char value number
+      else if (cNode->getElem() == '9') { total = 9; }      // Sets the total as the corresponding char value number
+      cNode = cNode->getNext(); pop();                      // Get the next node and seat it as the current node
       
       
       while (cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/') {
-        if (total != 0) { total = total * 10; }                  // If the elemValue value is '0' then theres no point in doing any operations on it
-        if (cNode->getElem() == '1') { total = total + 1; }      // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '2') { total = total + 2; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '3') { total = total + 3; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '4') { total = total + 4; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '5') { total = total + 5; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '6') { total = total + 6; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '7') { total = total + 7; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '8') { total = total + 8; } // Sets the total as the corresponding char value number
-        else if (cNode->getElem() == '9') { total = total + 9; } // Sets the total as the corresponding char value number
-        cNode = cNode->getNext(); pop();                         // Get the next node and seat it as the current node
+        if (total != 0) { total *= 10; }                      // If the elemValue value is '0' then theres no point in doing any operations on it
+        if (cNode->getElem() == '1') { total += 1; }          // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '2') { total += 2; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '3') { total += 3; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '4') { total += 4; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '5') { total += 5; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '6') { total += 6; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '7') { total += 7; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '8') { total += 8; }     // Sets the total as the corresponding char value number
+        else if (cNode->getElem() == '9') { total += 9; }     // Sets the total as the corresponding char value number
+        cNode = cNode->getNext(); pop();                      // Get the next node and seat it as the current node
       }
-      initChecker = true;                                        // Set initChecker to true to tell program that the first number has been loaded
+      initChecker = true;                                     // Set initChecker to true to tell program that the first number has been loaded
       
-                                                                      // Else if the current element in the stack is an operation value && opChecker == false
+                                                              // Else if the current element in the stack is an operation value && opChecker == false
     } else if((cNode->getElem() == '+' || cNode->getElem() == '-' || cNode->getElem() == '*' || cNode->getElem() == 'x' || cNode->getElem() == '/') && opChecker == false){
       cout << total;
       if      (cNode->getElem() == '+') { opVal = 1; cout << " + "; } // Sets the opVal value to the corresponding value depending on the type of element
@@ -135,43 +135,43 @@ double Stack::Solve(){
       else if (cNode->getElem() == '/') { opVal = 4; cout << " / "; } // Sets the opVal value to the corresponding value depending on the type of element
       opChecker = true;                                               // Set opChecker to true
       cNode = cNode->getNext(); pop();                                // Get the next node and seat it as the current node
-      
-                                                                     // Else if - the current element in the stack is a number && elemChecker == false
+
+                                                                      // Else if - the current element in the stack is a number && elemChecker == false
     } else if ( (cNode->getElem() == '0' || cNode->getElem() == '1' || cNode->getElem() == '2' || cNode->getElem() == '3' || cNode->getElem() == '4' ||
                  cNode->getElem() == '5' || cNode->getElem() == '6' || cNode->getElem() == '7' || cNode->getElem() == '8' || cNode->getElem() == '9' ) && elemChecker == false ){
-      if (cNode->getElem() == '0') { elemVal = 0; }                  // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '1') { elemVal = 1; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '2') { elemVal = 2; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '3') { elemVal = 3; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '4') { elemVal = 4; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '5') { elemVal = 5; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '6') { elemVal = 6; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '7') { elemVal = 7; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '8') { elemVal = 8; }             // Sets the elemVal as the corresponding char value number
-      else if (cNode->getElem() == '9') { elemVal = 9; }             // Sets the elemVal as the corresponding char value number
-      cNode = cNode->getNext(); pop();                               // Get the next node and seat it as the current node
-      
+      if (cNode->getElem() == '0') { elemVal = 0; }                   // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '1') { elemVal = 1; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '2') { elemVal = 2; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '3') { elemVal = 3; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '4') { elemVal = 4; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '5') { elemVal = 5; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '6') { elemVal = 6; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '7') { elemVal = 7; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '8') { elemVal = 8; }              // Sets the elemVal as the corresponding char value number
+      else if (cNode->getElem() == '9') { elemVal = 9; }              // Sets the elemVal as the corresponding char value number
+      cNode = cNode->getNext(); pop();                                // Get the next node and seat it as the current node
+ 
       while ( cNode != NULL && cNode->getElem() != '+' && cNode->getElem() != '-' && cNode->getElem() != '*' && cNode->getElem() != 'x' && cNode->getElem() != '/' ) {
-        if (elemVal != 0){ elemVal = elemVal * 10; }                 // If the elemValue value is '0' then theres no point in doing any operations on it
-        if (cNode->getElem() == '1') { elemVal = elemVal + 1; }      // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '2') { elemVal = elemVal + 2; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '3') { elemVal = elemVal + 3; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '4') { elemVal = elemVal + 4; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '5') { elemVal = elemVal + 5; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '6') { elemVal = elemVal + 6; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '7') { elemVal = elemVal + 7; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '8') { elemVal = elemVal + 8; } // Adds the elemVal as the corresponding char value number
-        else if (cNode->getElem() == '9') { elemVal = elemVal + 9; } // Adds the elemVal as the corresponding char value number
-        cNode = cNode->getNext(); pop();                             // Get the next node and seat it as the current node
+        if (elemVal != 0){ elemVal *= 10; }                   // If the elemValue value is '0' then theres no point in doing any operations on it
+        if (cNode->getElem() == '1') { elemVal += 1; }        // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '2') { elemVal += 2; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '3') { elemVal += 3; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '4') { elemVal += 4; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '5') { elemVal += 5; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '6') { elemVal += 6; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '7') { elemVal += 7; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '8') { elemVal += 8; }   // Adds the elemVal as the corresponding char value number
+        else if (cNode->getElem() == '9') { elemVal += 9; }   // Adds the elemVal as the corresponding char value number
+        cNode = cNode->getNext(); pop();                      // Get the next node and seat it as the current node
       }
-      cout << elemVal; elemChecker = true;                           // Output the elemVal vlaues and set elemChecker value to 'true'
+      cout << elemVal; elemChecker = true;                    // Output the elemVal vlaues and set elemChecker value to 'true'
     }
     
     if (opChecker == true && elemChecker == true) {                               // If elemChecker && opChecker variables are 'true' then
       total = Operations(total, elemVal, opVal); cout << " = " << total << endl;  // Call the Operations function and set the return value as the new 'total' value
       opChecker = false; elemChecker = false; opVal = 0; elemVal = 0;             // Reset the values opChacker, elemChecker, opVal, & elemVal
     }
-    if (cNode == NULL) { break; }                       // If there's nothing left in the stack, then end this function here
+    if (cNode == NULL) { break; }                                                 // If there's nothing left in the stack, then end this function here
   }
   return total;
 }
