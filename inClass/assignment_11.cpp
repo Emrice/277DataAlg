@@ -20,18 +20,18 @@ using namespace std;
 class Node {
 private:
   char nVal;
-  bool nMark;
+  bool nMarker;
   vector<Node*> cChildren;
   
 public:
-  Node() { nVal = ' '; nMark = false; }
+  Node() { nVal = ' '; nMarker = false; }
   Node* getChild(char cChar);
   
   char val() { return nVal; }
   void setVal(char cChar) { nVal = cChar; }
   
-  bool wMark() { return nMark; }
-  void setwMark() { nMark = true; }
+  bool wMark() { return nMarker; }
+  void setwMark() { nMarker = true; }
   void appendChild(Node* child) { cChildren.push_back(child); }
   vector<Node*> children() { return cChildren; }
 };
